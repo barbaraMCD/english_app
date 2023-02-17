@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from 'react';
-import {FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Alert, FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Trash2} from 'react-native-feather';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {addWord, deleteWord, WordState} from '../../store/reducers/WordReducer';
+import {addWord, deleteWord, modifyLevel, WordState} from '../../store/reducers/WordReducer';
 
 const Home = () => {
   const {word} = useAppSelector(state => state);

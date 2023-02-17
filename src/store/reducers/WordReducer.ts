@@ -16,17 +16,13 @@ export const wordSlice = createSlice({
       state.push(action.payload);
     },
     modifyLevel: (state, action) => {
-      state = state.map(n => {
-        if (n.id !== action.payload.id) {
-          return n;
-        }
-        return {...n, level: n.level + 1};
-      });
+      const word = state.find(w => w.id !== action.payload.id);
+      if (word) {
+        word.level += 1;
+      }
     },
-    deleteWord: (state, action) => {
-      state.filter(w => {
-        return w.id !== action.payload?.id;
-      });
+    deleteWord: (state, action: PayloadAction<WordState>) => {
+      return state.filter(w => w.id !== action.payload?.id);
     },
   },
 });
