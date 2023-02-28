@@ -25,7 +25,7 @@ const Review = () => {
     setBeginnerTab(beginner);
     setJuniorTab(junior);
     setSeniorTab(senior);
-  }, [beginner, junior, senior]);
+  }, []);
 
   return (
     <SafeAreaView style={Globalstyles.container}>
