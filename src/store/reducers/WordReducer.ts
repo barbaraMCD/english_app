@@ -16,7 +16,7 @@ export const wordSlice = createSlice({
       state.push(action.payload);
     },
     modifyLevel: (state, action) => {
-      const word = state.find(w => w.id !== action.payload.id);
+      const word = state.find(w => w.id === action.payload.id);
       if (word) {
         word.level += 1;
       }
