@@ -7,30 +7,25 @@ import {useSelector} from 'react-redux';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import {RootState} from '../../store/store';
-import {WordState} from '../../store/reducers/WordReducer';
 import Globalstyles from '../../../App.style';
+import {WordState} from '../../store/reducers/WordReducer';
 
 const Review = () => {
   const navigation: any = useNavigation();
   const {word} = useSelector((state: RootState) => state);
   const [isPress, setIsPress] = useState('');
-  const deb = word.filter(w => w.level < 5);
-  const pract = word.filter(w => w.level < 9);
-  const exp = word.filter(w => w.level >= 12);
-  const [tabs, setTabs] = useState<WordState[]>({
-    tabDeb: [],
-    tabPract: [],
-    tabExp: [],
-  });
+  const beginner = word.filter(w => w.level < 5);
+  const junior = word.filter(w => w.level > 4 && w.level < 9);
+  const senior = word.filter(w => w.level >= 12);
+  const [beginnerTab, setBeginnerTab] = useState<WordState[]>([]);
+  const [juniorTab, setJuniorTab] = useState<WordState[]>([]);
+  const [seniorTab, setSeniorTab] = useState<WordState[]>([]);
 
   useEffect(() => {
-    setTabs({
-      ...tabs,
-      tabDeb: deb,
-      tabPract: pract,
-      tabExp: exp,
-    });
-  }, []);
+    setBeginnerTab(beginner);
+    setJuniorTab(junior);
+    setSeniorTab(senior);
+  }, [beginner, junior, senior]);
 
   return (
     <SafeAreaView style={Globalstyles.container}>
@@ -44,25 +39,21 @@ const Review = () => {
           <View>
             <View style={styles.containerLevel}>
               <Text style={styles.numberOfNoteInLevel}>
-                {tabs.tabDeb.length}
+                {beginnerTab.length}
               </Text>
             </View>
             <Text style={{marginLeft: 20}}> A travailler </Text>
           </View>
           <View>
             <View style={[styles.containerLevel, {backgroundColor: 'gold'}]}>
-              <Text style={styles.numberOfNoteInLevel}>
-                {tabs.tabPract.length}
-              </Text>
+              <Text style={styles.numberOfNoteInLevel}>{juniorTab.length}</Text>
             </View>
             <Text style={{marginLeft: 20}}> A revoir </Text>
           </View>
           <View>
             <View
               style={[styles.containerLevel, {backgroundColor: 'forestgreen'}]}>
-              <Text style={styles.numberOfNoteInLevel}>
-                {tabs.tabExp.length}
-              </Text>
+              <Text style={styles.numberOfNoteInLevel}>{seniorTab.length}</Text>
             </View>
             <Text style={{marginLeft: 20}}> Acquis </Text>
           </View>

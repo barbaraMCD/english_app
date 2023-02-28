@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {
   FlatList,
-  KeyboardAvoidingView,
   Modal,
   Pressable,
   Text,
@@ -9,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {List, Plus, Trash2, XCircle} from 'react-native-feather';
+import {Plus, Trash2, XCircle} from 'react-native-feather';
 import styles from './Home.style';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {addWord, deleteWord, WordState} from '../../store/reducers/WordReducer';
