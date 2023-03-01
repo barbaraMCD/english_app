@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {
   createNativeStackNavigator,
-  NativeStackScreenProps,
   NativeStackNavigationProp,
+  NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import Home from '../views/Home/Home';
 import TabNavigator from './TabNavigator';
@@ -13,13 +13,17 @@ type StackParamList = {
   TabNav: undefined;
   MaListe: undefined;
   Réviser: undefined;
-  ReviewInProgress: {reviewToUse: string};
+  ReviewInProgress: {reviewToUse: number};
 };
 
 // for route.params
 export type Props = NativeStackScreenProps<StackParamList, 'ReviewInProgress'>;
 // for useNavigation()
-export type ReviserProp = NativeStackNavigationProp<StackParamList, 'Réviser'>;
+export type MyNavigationProp = NativeStackNavigationProp<
+  StackParamList,
+  'Réviser',
+  'ReviewInProgress'
+>;
 
 const Stack = createNativeStackNavigator<StackParamList>();
 

@@ -9,12 +9,12 @@ import {useEffect} from 'react';
 import {RootState} from '../../store/store';
 import Globalstyles from '../../../App.style';
 import {WordState} from '../../store/reducers/WordReducer';
-import {ReviserProp} from '../../navigation/AppNavigator';
+import {MyNavigationProp} from '../../navigation/AppNavigator';
 
 const Review = () => {
-  const navigation: any = useNavigation();
+  const navigation = useNavigation<MyNavigationProp>();
   const {word} = useSelector((state: RootState) => state);
-  const [reviewPicked, setReviewPicked] = useState('');
+  const [reviewPicked, setReviewPicked] = useState(0);
   const [disabledButtonStart, setDisabledButtonStart] = useState(true);
   const ios = Platform.OS === 'ios';
   const beginner = word.filter(w => w.level < 5);
@@ -81,11 +81,11 @@ const Review = () => {
             ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
           }
           onPress={() => {
-            setReviewPicked('10');
+            setReviewPicked(1);
             setDisabledButtonStart(false);
           }}>
           <View style={styles.round}>
-            {reviewPicked === '10' ? <View style={styles.dot} /> : null}
+            {reviewPicked === 1 ? <View style={styles.dot} /> : null}
           </View>
           <Text style={styles.text}> 10 mots </Text>
         </Pressable>
@@ -94,11 +94,11 @@ const Review = () => {
             ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
           }
           onPress={() => {
-            setReviewPicked('20');
+            setReviewPicked(2);
             setDisabledButtonStart(false);
           }}>
           <View style={styles.round}>
-            {reviewPicked === '20' ? <View style={styles.dot} /> : null}
+            {reviewPicked === 2 ? <View style={styles.dot} /> : null}
           </View>
           <Text style={styles.text}> 20 mots </Text>
         </Pressable>
@@ -107,11 +107,11 @@ const Review = () => {
             ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
           }
           onPress={() => {
-            setReviewPicked('30');
+            setReviewPicked(3);
             setDisabledButtonStart(false);
           }}>
           <View style={styles.round}>
-            {reviewPicked === '30' ? <View style={styles.dot} /> : null}
+            {reviewPicked === 3 ? <View style={styles.dot} /> : null}
           </View>
           <Text style={styles.text}> 30 mots </Text>
         </Pressable>
@@ -120,22 +120,22 @@ const Review = () => {
             ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
           }
           onPress={() => {
-            setReviewPicked('all');
+            setReviewPicked(word.length);
             setDisabledButtonStart(false);
           }}>
           <View style={styles.round}>
-            {reviewPicked === 'all' ? <View style={styles.dot} /> : null}
+            {reviewPicked === word.length ? <View style={styles.dot} /> : null}
           </View>
           <Text style={styles.text}> Tous mes mots </Text>
         </Pressable>
         {ios ? (
           <Pressable
             disabled={disabledButtonStart}
-            onPress={() =>
+            onPress={() => {
               navigation.navigate('ReviewInProgress', {
                 reviewToUse: reviewPicked,
-              })
-            }
+              });
+            }}
             style={
               disabledButtonStart
                 ? [styles.StartTheReviewButtonIos, {opacity: 0.5}]
@@ -146,11 +146,11 @@ const Review = () => {
         ) : (
           <Pressable
             disabled={disabledButtonStart}
-            onPress={() =>
+            onPress={() => {
               navigation.navigate('ReviewInProgress', {
                 reviewToUse: reviewPicked,
-              })
-            }
+              });
+            }}
             style={
               disabledButtonStart
                 ? [styles.StartTheReviewButtonIos, {opacity: 0.5}]
