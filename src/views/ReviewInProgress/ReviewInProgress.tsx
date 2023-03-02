@@ -191,9 +191,11 @@ const ReviewInProgress = ({route}: Props) => {
           </View>
         ) : null}
       </KeyboardAvoidingView>
-      <OpenURLButton url={supportedURL}>
-        Designed by pch.vector / Freepik
-      </OpenURLButton>
+      <View style={{alignSelf: 'center'}}>
+        <OpenURLButton url={supportedURL}>
+          Designed by pch.vector / Freepik
+        </OpenURLButton>
+      </View>
     </SafeAreaView>
   );
 };

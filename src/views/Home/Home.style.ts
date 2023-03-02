@@ -3,9 +3,11 @@ import {Dimensions, StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   listOfWordContainer: {
     flex: 18,
+    marginBottom: 90,
   },
   flatlist: {
     padding: 20,
+    paddingBottom: 30,
   },
   wordContainer: {
     display: 'flex',
@@ -34,13 +36,13 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 1,
     bottom: 30,
-    height: 50,
-    width: 50,
-    borderRadius: 100,
-    backgroundColor: 'dodgerblue',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  picture: {
+    height: 50,
+    width: 50,
   },
   centeredView: {
     flex: 1,
@@ -68,28 +70,35 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  closedButtonModal: {
-    position: 'absolute',
-    right: 4,
-    top: 4,
-  },
   modalText: {
     fontSize: 16,
     fontWeight: 'bold',
+    alignSelf: 'center',
+    color: 'dimgray',
   },
   input: {
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
-    width: '90%',
+    width: '80%',
     padding: 0,
     marginBottom: 30,
     marginTop: 10,
+    alignSelf: 'center',
   },
   addWordButton: {
     padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     alignSelf: 'center',
-    backgroundColor: 'dodgerblue',
+    backgroundColor: 'coral',
     borderRadius: 5,
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
   },
 });
 

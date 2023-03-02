@@ -18,8 +18,8 @@ const OpenURLButton = ({url, children}: OpenURLButtonProps) => {
   }, [url]);
 
   return (
-    <Pressable onPress={handlePress} style={{alignSelf: 'center'}}>
-      <Text> {children} </Text>
+    <Pressable onPress={handlePress}>
+      <Text style={{fontSize: 10, color: 'lightgray'}}> {children} </Text>
     </Pressable>
   );
 };

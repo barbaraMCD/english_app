@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {
   FlatList,
+  Image,
   Modal,
   Pressable,
   Text,
@@ -8,18 +9,21 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Plus, Trash2, XCircle} from 'react-native-feather';
+import {Trash2, XCircle} from 'react-native-feather';
 import styles from './Home.style';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {addWord, deleteWord, WordState} from '../../store/reducers/WordReducer';
 import Globalstyles from '../../../App.style';
 import {TextInput} from 'react-native-gesture-handler';
 import {ios} from '../../helpers/constant';
+import add from '../../assets/images/add.png';
+import OpenURLButton from '../../components/OpenURLButton/OpenURLButton';
 
 const Home = () => {
   const {word} = useAppSelector(state => state);
   const dispatch = useAppDispatch();
   const [modalVisible, setModalVisible] = useState(false);
+  const supportedURL = 'https://www.flaticon.com/free-icons/add';
 
   const [oneWord, setOneWord] = useState({
     id: Math.random(),
@@ -55,7 +59,12 @@ const Home = () => {
         <Text style={Globalstyles.headerTitle}> Ma liste de mots </Text>
       </View>
       {word ? (
-        <View style={styles.listOfWordContainer}>
+        <View
+          style={
+            ios
+              ? [styles.listOfWordContainer, {marginBottom: 50}]
+              : styles.listOfWordContainer
+          }>
           <FlatList
             data={word}
             style={styles.flatlist}
@@ -82,16 +91,11 @@ const Home = () => {
       <TouchableOpacity
         style={styles.floatingButton}
         onPress={() => setModalVisible(true)}>
-        <Plus height={20} color={'white'} />
+        <Image style={styles.picture} source={add} />
       </TouchableOpacity>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={ios ? styles.centeredViewIos : styles.centeredView}>
           <View style={styles.modalView}>
-            <Pressable
-              style={styles.closedButtonModal}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <XCircle height={20} color="black" />
-            </Pressable>
             <Text style={styles.modalText}> Français </Text>
             <TextInput
               value={oneWord.french}
@@ -104,12 +108,37 @@ const Home = () => {
               style={styles.input}
               onChangeText={value => setOneWord({...oneWord, english: value})}
             />
-            <TouchableOpacity onPress={addList} style={styles.addWordButton}>
-              <Text style={{color: 'white'}}> Ajouter </Text>
-            </TouchableOpacity>
+            <View style={styles.buttons}>
+              <TouchableOpacity
+                onPress={() => setModalVisible(!modalVisible)}
+                style={
+                  ios
+                    ? [
+                        styles.addWordButton,
+                        {backgroundColor: '#f5b031', marginTop: 10},
+                      ]
+                    : [styles.addWordButton, {backgroundColor: '#f5b031'}]
+                }>
+                <Text style={{color: 'white'}}> Annuler </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={addList}
+                style={
+                  ios
+                    ? [styles.addWordButton, {marginTop: 10}]
+                    : styles.addWordButton
+                }>
+                <Text style={{color: 'white'}}> Ajouter </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
+      <View style={{position: 'absolute', bottom: 5, left: 5}}>
+        <OpenURLButton url={supportedURL}>
+          Add icons created by itim2101 - Flaticon
+        </OpenURLButton>
+      </View>
     </SafeAreaView>
   );
 };
