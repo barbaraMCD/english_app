@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   listOfWordContainer: {
@@ -45,18 +45,19 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 170,
+    justifyContent: 'center',
   },
-  closedButtonModal: {
-    position: 'absolute',
-    right: 4,
-    top: 4,
+  centeredViewIos: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 220,
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
     borderRadius: 10,
+    height: Dimensions.get('window').height / 3,
     width: '80%',
+    justifyContent: 'center',
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -67,10 +68,14 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  closedButtonModal: {
+    position: 'absolute',
+    right: 4,
+    top: 4,
+  },
   modalText: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginTop: 10,
   },
   input: {
     borderBottomColor: 'lightgray',

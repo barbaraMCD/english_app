@@ -28,6 +28,9 @@ const Globalstyles = StyleSheet.create({
     backgroundColor: 'lightgray',
     marginTop: 40,
   },
+  text: {
+    color: '#4A4A4A',
+  },
 });
 
 export default Globalstyles;

@@ -1,4 +1,4 @@
-import {Platform, Pressable, SafeAreaView, Text, View} from 'react-native';
+import {Pressable, SafeAreaView, Text, View} from 'react-native';
 import styles from './Review.style';
 import React from 'react';
 import {BookOpen} from 'react-native-feather';
@@ -10,13 +10,13 @@ import {RootState} from '../../store/store';
 import Globalstyles from '../../../App.style';
 import {WordState} from '../../store/reducers/WordReducer';
 import {MyNavigationProp} from '../../navigation/AppNavigator';
+import {ios} from '../../helpers/constant';
 
 const Review = () => {
   const navigation = useNavigation<MyNavigationProp>();
   const {word} = useSelector((state: RootState) => state);
   const [reviewPicked, setReviewPicked] = useState(0);
   const [disabledButtonStart, setDisabledButtonStart] = useState(true);
-  const ios = Platform.OS === 'ios';
   const beginner = word.filter(w => w.level < 5);
   const junior = word.filter(w => w.level > 4 && w.level < 9);
   const senior = word.filter(w => w.level >= 12);
@@ -49,20 +49,22 @@ const Review = () => {
                 {beginnerTab.length}
               </Text>
             </View>
-            <Text style={[styles.text, {marginLeft: 20}]}> A travailler </Text>
+            <Text style={[Globalstyles.text, {marginLeft: 20}]}>
+              A travailler
+            </Text>
           </View>
           <View>
             <View style={[styles.containerLevel, {backgroundColor: 'gold'}]}>
               <Text style={styles.numberOfNoteInLevel}>{juniorTab.length}</Text>
             </View>
-            <Text style={[styles.text, {marginLeft: 20}]}> A revoir </Text>
+            <Text style={[Globalstyles.text, {marginLeft: 20}]}>A revoir</Text>
           </View>
           <View>
             <View
               style={[styles.containerLevel, {backgroundColor: 'forestgreen'}]}>
               <Text style={styles.numberOfNoteInLevel}>{seniorTab.length}</Text>
             </View>
-            <Text style={[styles.text, {marginLeft: 20}]}> Acquis </Text>
+            <Text style={[Globalstyles.text, {marginLeft: 20}]}> Acquis </Text>
           </View>
         </View>
         <View style={Globalstyles.line} />
@@ -87,7 +89,7 @@ const Review = () => {
           <View style={styles.round}>
             {reviewPicked === 1 ? <View style={styles.dot} /> : null}
           </View>
-          <Text style={styles.text}> 10 mots </Text>
+          <Text style={Globalstyles.text}> Jusqu'à 10 mots </Text>
         </Pressable>
         <Pressable
           style={
@@ -100,7 +102,7 @@ const Review = () => {
           <View style={styles.round}>
             {reviewPicked === 2 ? <View style={styles.dot} /> : null}
           </View>
-          <Text style={styles.text}> 20 mots </Text>
+          <Text style={Globalstyles.text}> 20 mots </Text>
         </Pressable>
         <Pressable
           style={
@@ -113,7 +115,7 @@ const Review = () => {
           <View style={styles.round}>
             {reviewPicked === 3 ? <View style={styles.dot} /> : null}
           </View>
-          <Text style={styles.text}> 30 mots </Text>
+          <Text style={Globalstyles.text}> 30 mots </Text>
         </Pressable>
         <Pressable
           style={
@@ -126,7 +128,7 @@ const Review = () => {
           <View style={styles.round}>
             {reviewPicked === word.length ? <View style={styles.dot} /> : null}
           </View>
-          <Text style={styles.text}> Tous mes mots </Text>
+          <Text style={Globalstyles.text}> Tous mes mots </Text>
         </Pressable>
         {ios ? (
           <Pressable
@@ -141,7 +143,7 @@ const Review = () => {
                 ? [styles.StartTheReviewButtonIos, {opacity: 0.5}]
                 : styles.StartTheReviewButtonIos
             }>
-            <Text style={styles.text}> Commencer </Text>
+            <Text style={Globalstyles.text}> Commencer </Text>
           </Pressable>
         ) : (
           <Pressable
@@ -156,7 +158,7 @@ const Review = () => {
                 ? [styles.StartTheReviewButtonIos, {opacity: 0.5}]
                 : styles.StartTheReviewButtonIos
             }>
-            <Text style={styles.text}> Commencer </Text>
+            <Text style={Globalstyles.text}> Commencer </Text>
           </Pressable>
         )}
       </View>

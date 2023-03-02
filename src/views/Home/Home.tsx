@@ -14,6 +14,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {addWord, deleteWord, WordState} from '../../store/reducers/WordReducer';
 import Globalstyles from '../../../App.style';
 import {TextInput} from 'react-native-gesture-handler';
+import {ios} from '../../helpers/constant';
 
 const Home = () => {
   const {word} = useAppSelector(state => state);
@@ -84,7 +85,7 @@ const Home = () => {
         <Plus height={20} color={'white'} />
       </TouchableOpacity>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
+        <View style={ios ? styles.centeredViewIos : styles.centeredView}>
           <View style={styles.modalView}>
             <Pressable
               style={styles.closedButtonModal}

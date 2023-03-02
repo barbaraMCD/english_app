@@ -1,5 +1,11 @@
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Pressable, Text, TouchableOpacity, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {MyNavigationProp, Props} from '../../navigation/AppNavigator';
 import {RootState} from '../../store/store';
 import {useSelector} from 'react-redux';
@@ -11,7 +17,9 @@ import {useAppDispatch} from '../../hooks';
 import React from 'react';
 import styles from './ReviewInProgress.style';
 import {useNavigation} from '@react-navigation/native';
-import {ArrowLeft} from 'react-native-feather';
+import Globalstyles from '../../../App.style';
+import {ios} from '../../helpers/constant';
+import {Check, X} from 'react-native-feather';
 
 const ReviewInProgress = ({route}: Props) => {
   const dispatch = useAppDispatch();
@@ -20,7 +28,8 @@ const ReviewInProgress = ({route}: Props) => {
   const {word} = useSelector((state: RootState) => state);
   const [tabRandomWords, setTabRandomWords] = useState<WordState[]>([]);
   const [current, setCurrent] = useState(0);
-  const [isGoodResponse, setIsGoodResponse] = useState(true);
+  const [isGoodResponse, setIsGoodResponse] = useState<boolean>(false);
+  const [isBadResponse, setIsBadResponse] = useState<boolean>(false);
   const [response, setResponse] = useState('');
 
   const selectRandomWords = word.map((_n, _) => {
@@ -36,100 +45,121 @@ const ReviewInProgress = ({route}: Props) => {
     selectRandomWords;
   }, [selectRandomWords]);
 
-  const verifyResponse = (word: WordState) => {
-    if (response === word.french) {
+  const verifyResponse = (oneWord: WordState) => {
+    if (response === oneWord.english) {
       setIsGoodResponse(true);
-      dispatch(modifyLevel(word));
-      setResponse('');
-      setCurrent(current + 1);
+      dispatch(modifyLevel(oneWord));
     } else {
-      setIsGoodResponse(false);
+      setIsBadResponse(true);
     }
   };
 
-  const oneWordContainer = tabRandomWords.map((w, key) => {
+  const followingWord = () => {
+    setCurrent(current + 1);
+    setResponse('');
+  };
+
+  const wordContainer = tabRandomWords.map((w, key) => {
     if (key === current) {
       return (
         <View
           key={key}
-          style={{
-            backgroundColor: 'darkslategrey',
-            padding: 30,
-            borderRadius: 20,
-          }}>
-          <View style={styles.note}>
-            <Text style={styles.modalText}> {w.english} </Text>
+          style={
+            ios
+              ? [styles.wordToGuessContainer, {gap: 30}]
+              : styles.wordToGuessContainer
+          }>
+          <View style={styles.increase}>
+            {ios ? (
+              <View style={styles.increaseTextIos}>
+                <Text> {key + 1}</Text>
+              </View>
+            ) : (
+              <Text style={styles.increaseText}>{key + 1}</Text>
+            )}
+            <View style={styles.progressBar} />
+            {ios ? (
+              <View style={styles.increaseTextIos}>
+                <Text> {tabRandomWords.length}</Text>
+              </View>
+            ) : (
+              <Text style={styles.increaseText}>{tabRandomWords.length}</Text>
+            )}
+          </View>
+          <Text style={styles.englishWord}> {w.french} </Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             <TextInput
               style={styles.input}
               value={response}
+              placeholder="Votre réponse..."
+              placeholderTextColor={'#A7A7A7'}
               onChangeText={value => setResponse(value)}
             />
+            <View style={{position: 'absolute', right: 25}}>
+              {isGoodResponse ? <Check height={16} color={'coral'} /> : null}
+              {isBadResponse ? <X height={16} color={'coral'} /> : null}
+            </View>
           </View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => verifyResponse(w)}>
-            <Text style={{color: 'darkslategrey', alignSelf: 'center'}}>
-              {' '}
-              Valider
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: '#f5b031'}]}
+              onPress={() => navigation.goBack()}>
+              <Text style={[Globalstyles.text, {color: 'white'}]}>
+                {' '}
+                Annuler
+              </Text>
+            </TouchableOpacity>
+            {response === '' ? (
+              <TouchableOpacity
+                style={[styles.button, {opacity: 0.7}]}
+                disabled>
+                <Text style={[Globalstyles.text, {color: 'white'}]}>
+                  {' '}
+                  Valider
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={
+                  (!isGoodResponse && isBadResponse) ||
+                  (isGoodResponse && !isBadResponse)
+                    ? followingWord
+                    : () => verifyResponse(w)
+                }>
+                <Text style={[Globalstyles.text, {color: 'white'}]}>
+                  {(!isGoodResponse && isBadResponse) ||
+                  (isGoodResponse && !isBadResponse)
+                    ? 'Suivant'
+                    : 'Valider'}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       );
     }
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Pressable style={{width: 25}} onPress={() => navigation.goBack()}>
-          <ArrowLeft color={'darkslategrey'} />
-        </Pressable>
-        <Text style={{fontSize: 18, marginLeft: 10, color: 'darkslategrey'}}>
-          {' '}
-          Réviser{' '}
-        </Text>
-      </View>
-      <View style={{paddingTop: 30}}>
-        {isGoodResponse && current !== tabRandomWords.length && current > 0 ? (
-          <Text style={{color: 'darkslategrey', fontSize: 18}}>
-            {' '}
-            Bravo, tu progresses{' '}
-          </Text>
-        ) : null}
-        {!isGoodResponse ? (
-          <View style={{display: 'flex', alignItems: 'center'}}>
-            <Text style={{color: 'darkslategrey', fontSize: 18}}>
-              {' '}
-              Mauvaise réponse
-            </Text>
-            {current !== tabRandomWords.length ? (
-              <Pressable
-                style={styles.badAnswer}
-                onPress={() => {
-                  setCurrent(current + 1);
-                  setResponse('');
-                }}>
-                <Text style={{color: 'white'}}> Passer au mot suivant </Text>
-              </Pressable>
-            ) : null}
-          </View>
-        ) : null}
-      </View>
-      <View
-        style={{
-          height: '80%',
-          display: 'flex',
-          alignItems: 'center',
-          paddingTop: 70,
-        }}>
-        {oneWordContainer}
+    <SafeAreaView style={Globalstyles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        {wordContainer}
         {current === tabRandomWords.length ? (
-          <Text style={{color: 'darkslategrey', fontSize: 20}}>
-            {' '}
-            Bravo tu as révisé {reviewToUse} mots !{' '}
+          <Text style={{fontSize: 20}}>
+            Ici il faudrait mettre le score obtenu + un lien de go back
           </Text>
         ) : null}
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

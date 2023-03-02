@@ -37,9 +37,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 10,
   },
-  text: {
-    color: '#4A4A4A',
-  },
   choiceWhichReviewContainer: {
     flex: 12,
     gap: 22,
