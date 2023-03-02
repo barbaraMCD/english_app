@@ -56,10 +56,19 @@ const styles = StyleSheet.create({
   input: {
     width: '90%',
     height: 40,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: 'lightgray',
     borderRadius: 7,
     color: 'dimgray',
+    paddingLeft: 20,
+  },
+  goodResponseInput: {
+    width: '90%',
+    height: 40,
+    backgroundColor: 'coral',
+    borderRadius: 7,
+    color: 'white',
+    paddingLeft: 20,
   },
   button: {
     padding: 8,
@@ -78,14 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
-  },
-  badAnswer: {
-    padding: 10,
-    textAlign: 'center',
-    backgroundColor: 'darkslategrey',
-    marginTop: 10,
-    borderRadius: 20,
-    alignSelf: 'center',
   },
   picture: {
     height: 200,

@@ -24,7 +24,7 @@ import {ios} from '../../helpers/constant';
 import {Check, X} from 'react-native-feather';
 import bravo from '../../assets/images/bravo.jpg';
 import goal from '../../assets/images/goal.jpg';
-import OpenURLButton from '../../components/OpenURLButton';
+import OpenURLButton from '../../components/OpenURLButton/OpenURLButton';
 
 const ReviewInProgress = ({route}: Props) => {
   const dispatch = useAppDispatch();
@@ -33,6 +33,7 @@ const ReviewInProgress = ({route}: Props) => {
   const {word} = useSelector((state: RootState) => state);
   const [tabRandomWords, setTabRandomWords] = useState<WordState[]>([]);
   const [current, setCurrent] = useState(0);
+  const [onFocus, setOnFocus] = useState(false);
   const [isGoodResponse, setIsGoodResponse] = useState<boolean>(false);
   const [isBadResponse, setIsBadResponse] = useState<boolean>(false);
   const [tabGoodResponse, setTabGoodResponse] = useState<WordState[]>([]);
@@ -53,6 +54,7 @@ const ReviewInProgress = ({route}: Props) => {
   }, [selectRandomWords]);
 
   const verifyResponse = (oneWord: WordState) => {
+    setOnFocus(false);
     if (response === oneWord.english) {
       setIsGoodResponse(true);
       dispatch(modifyLevel(oneWord));
@@ -63,10 +65,23 @@ const ReviewInProgress = ({route}: Props) => {
   };
 
   const followingWord = () => {
+    setOnFocus(false);
     setCurrent(current + 1);
     setResponse('');
     setIsBadResponse(false);
     setIsGoodResponse(false);
+  };
+
+  const stylingOfInput = () => {
+    if (onFocus) {
+      return [styles.input, {borderColor: 'coral'}];
+    } else if (isGoodResponse) {
+      return styles.goodResponseInput;
+    } else if (isBadResponse) {
+      return [styles.goodResponseInput, {backgroundColor: '#f5b031'}];
+    } else {
+      return styles.input;
+    }
   };
 
   const wordContainer = tabRandomWords.map((w, key) => {
@@ -90,21 +105,25 @@ const ReviewInProgress = ({route}: Props) => {
               justifyContent: 'center',
             }}>
             <TextInput
-              style={styles.input}
+              style={stylingOfInput()}
+              onFocus={() => setOnFocus(true)}
               value={response}
               placeholder="Votre réponse..."
               placeholderTextColor={'#A7A7A7'}
               onChangeText={value => setResponse(value)}
             />
             <View style={{position: 'absolute', right: 25}}>
-              {isGoodResponse ? <Check height={16} color={'coral'} /> : null}
-              {isBadResponse ? <X height={16} color={'coral'} /> : null}
+              {isGoodResponse ? <Check height={20} color={'white'} /> : null}
+              {isBadResponse ? <X height={20} color={'white'} /> : null}
             </View>
           </View>
           <View style={styles.buttons}>
             <TouchableOpacity
               style={[styles.button, {backgroundColor: '#f5b031'}]}
-              onPress={() => navigation.goBack()}>
+              onPress={() => {
+                setOnFocus(false);
+                navigation.goBack();
+              }}>
               <Text style={[Globalstyles.text, {color: 'white'}]}>
                 {' '}
                 Annuler
