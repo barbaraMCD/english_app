@@ -1,5 +1,7 @@
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
+  Dimensions,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Text,
@@ -20,6 +22,9 @@ import {useNavigation} from '@react-navigation/native';
 import Globalstyles from '../../../App.style';
 import {ios} from '../../helpers/constant';
 import {Check, X} from 'react-native-feather';
+import bravo from '../../assets/images/bravo.jpg';
+import goal from '../../assets/images/goal.jpg';
+import OpenURLButton from '../../components/OpenURLButton';
 
 const ReviewInProgress = ({route}: Props) => {
   const dispatch = useAppDispatch();
@@ -32,6 +37,7 @@ const ReviewInProgress = ({route}: Props) => {
   const [isBadResponse, setIsBadResponse] = useState<boolean>(false);
   const [tabGoodResponse, setTabGoodResponse] = useState<WordState[]>([]);
   const [response, setResponse] = useState('');
+  const supportedURL = 'http://www.freepik.com';
 
   const selectRandomWords = word.map((_n, _) => {
     if (tabRandomWords.length < reviewToUse) {
@@ -73,23 +79,7 @@ const ReviewInProgress = ({route}: Props) => {
               ? [styles.wordToGuessContainer, {gap: 30}]
               : styles.wordToGuessContainer
           }>
-          <View style={styles.increase}>
-            {ios ? (
-              <View style={styles.increaseTextIos}>
-                <Text> {key + 1}</Text>
-              </View>
-            ) : (
-              <Text style={styles.increaseText}>{key + 1}</Text>
-            )}
-            <View style={styles.progressBar} />
-            {ios ? (
-              <View style={styles.increaseTextIos}>
-                <Text> {tabRandomWords.length}</Text>
-              </View>
-            ) : (
-              <Text style={styles.increaseText}>{tabRandomWords.length}</Text>
-            )}
-          </View>
+          <Image style={styles.picture} source={goal} />
           <Text style={styles.englishWord}> {w.french} </Text>
           <View
             style={{
@@ -159,14 +149,22 @@ const ReviewInProgress = ({route}: Props) => {
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {wordContainer}
         {current === tabRandomWords.length ? (
-          <View style={styles.wordToGuessContainer}>
-            <Text>bravo vous avez obtenu le score :</Text>
-            <Text>
+          <View
+            style={[
+              styles.wordToGuessContainer,
+              {height: Dimensions.get('window').height / 2},
+            ]}>
+            <Image style={styles.picture} source={bravo} />
+            <Text>Vous avez obtenu le score :</Text>
+            <Text style={Globalstyles.headerTitle}>
               {tabGoodResponse.length + ' / ' + tabRandomWords.length}
             </Text>
             <TouchableOpacity
               style={[styles.button, {backgroundColor: '#f5b031'}]}
-              onPress={() => navigation.goBack()}>
+              onPress={() => {
+                navigation.goBack();
+                setTabRandomWords([]);
+              }}>
               <Text style={[Globalstyles.text, {color: 'white'}]}>
                 Continuer
               </Text>
@@ -174,6 +172,9 @@ const ReviewInProgress = ({route}: Props) => {
           </View>
         ) : null}
       </KeyboardAvoidingView>
+      <OpenURLButton url={supportedURL}>
+        Designed by pch.vector / Freepik
+      </OpenURLButton>
     </SafeAreaView>
   );
 };

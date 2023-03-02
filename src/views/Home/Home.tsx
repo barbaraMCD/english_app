@@ -66,7 +66,7 @@ const Home = () => {
                   <Text style={styles.index}> {index + 1} </Text>
                   <Text style={styles.wordInEnglish}> {item.english}</Text>
                   <Text style={styles.wordInFrench}> {item.french}</Text>
-                  <Trash2 color={'crimson'} onPress={() => removeList(item)} />
+                  <Trash2 color={'coral'} onPress={() => removeList(item)} />
                 </View>
               );
             }}

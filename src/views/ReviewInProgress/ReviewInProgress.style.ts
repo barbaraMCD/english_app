@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     display: 'flex',
-    height: Dimensions.get('window').height / 2.5,
+    height: Dimensions.get('window').height / 1.8,
     alignItems: 'center',
     width: '90%',
     justifyContent: 'center',
@@ -86,6 +86,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 20,
     alignSelf: 'center',
+  },
+  picture: {
+    height: 200,
+    width: 200,
+    borderRadius: 100,
   },
 });
 

@@ -42,29 +42,73 @@ const Review = () => {
       </View>
       <View style={ios ? styles.boxesIos : styles.boxes}>
         <Text style={ios ? styles.titleIos : styles.title}>Ma progression</Text>
-        <View style={{display: 'flex', flexDirection: 'row'}}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+          }}>
           <View>
-            <View style={styles.containerLevel}>
+            <View
+              style={
+                ios
+                  ? [styles.containerLevel, {height: 120}]
+                  : styles.containerLevel
+              }>
               <Text style={styles.numberOfNoteInLevel}>
                 {beginnerTab.length}
               </Text>
             </View>
-            <Text style={[Globalstyles.text, {marginLeft: 20}]}>
+            <Text
+              style={
+                ios
+                  ? [Globalstyles.textIos, {marginLeft: 20}]
+                  : [Globalstyles.text, {marginLeft: 20}]
+              }>
               A travailler
             </Text>
           </View>
           <View>
-            <View style={[styles.containerLevel, {backgroundColor: 'gold'}]}>
+            <View
+              style={
+                ios
+                  ? [
+                      styles.containerLevel,
+                      {height: 120, backgroundColor: 'gold'},
+                    ]
+                  : [styles.containerLevel, {backgroundColor: 'gold'}]
+              }>
               <Text style={styles.numberOfNoteInLevel}>{juniorTab.length}</Text>
             </View>
-            <Text style={[Globalstyles.text, {marginLeft: 20}]}>A revoir</Text>
+            <Text
+              style={
+                ios
+                  ? [Globalstyles.textIos, {marginLeft: 20}]
+                  : [Globalstyles.text, {marginLeft: 20}]
+              }>
+              A revoir
+            </Text>
           </View>
           <View>
             <View
-              style={[styles.containerLevel, {backgroundColor: 'forestgreen'}]}>
+              style={
+                ios
+                  ? [
+                      styles.containerLevel,
+                      {height: 120, backgroundColor: 'forestgreen'},
+                    ]
+                  : [styles.containerLevel, {backgroundColor: 'forestgreen'}]
+              }>
               <Text style={styles.numberOfNoteInLevel}>{seniorTab.length}</Text>
             </View>
-            <Text style={[Globalstyles.text, {marginLeft: 20}]}> Acquis </Text>
+            <Text
+              style={
+                ios
+                  ? [Globalstyles.textIos, {marginLeft: 20}]
+                  : [Globalstyles.text, {marginLeft: 20}]
+              }>
+              Acquis
+            </Text>
           </View>
         </View>
         <View style={Globalstyles.line} />
@@ -78,45 +122,102 @@ const Review = () => {
           }>
           J'aimerais réviser :
         </Text>
-        <Pressable
-          style={
-            ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
-          }
-          onPress={() => {
-            setReviewPicked(1);
-            setDisabledButtonStart(false);
-          }}>
-          <View style={styles.round}>
-            {reviewPicked === 1 ? <View style={styles.dot} /> : null}
-          </View>
-          <Text style={Globalstyles.text}> Jusqu'à 10 mots </Text>
-        </Pressable>
-        <Pressable
-          style={
-            ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
-          }
-          onPress={() => {
-            setReviewPicked(2);
-            setDisabledButtonStart(false);
-          }}>
-          <View style={styles.round}>
-            {reviewPicked === 2 ? <View style={styles.dot} /> : null}
-          </View>
-          <Text style={Globalstyles.text}> 20 mots </Text>
-        </Pressable>
-        <Pressable
-          style={
-            ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
-          }
-          onPress={() => {
-            setReviewPicked(3);
-            setDisabledButtonStart(false);
-          }}>
-          <View style={styles.round}>
-            {reviewPicked === 3 ? <View style={styles.dot} /> : null}
-          </View>
-          <Text style={Globalstyles.text}> 30 mots </Text>
-        </Pressable>
+        {word.length >= 10 ? (
+          <Pressable
+            style={
+              ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
+            }
+            onPress={() => {
+              setReviewPicked(10);
+              setDisabledButtonStart(false);
+            }}>
+            <View style={styles.round}>
+              {reviewPicked === 10 ? <View style={styles.dot} /> : null}
+            </View>
+            <Text style={Globalstyles.text}> Jusqu'à 10 mots </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            disabled
+            style={
+              ios
+                ? [styles.checkboxes, {marginLeft: 30, opacity: 0.7}]
+                : [styles.checkboxes, {opacity: 0.7}]
+            }
+            onPress={() => {
+              setReviewPicked(10);
+              setDisabledButtonStart(false);
+            }}>
+            <View style={styles.round}>
+              {reviewPicked === 10 ? <View style={styles.dot} /> : null}
+            </View>
+            <Text style={Globalstyles.textIos}> 10 mots </Text>
+          </Pressable>
+        )}
+        {word.length >= 20 ? (
+          <Pressable
+            style={
+              ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
+            }
+            onPress={() => {
+              setReviewPicked(20);
+              setDisabledButtonStart(false);
+            }}>
+            <View style={styles.round}>
+              {reviewPicked === 20 ? <View style={styles.dot} /> : null}
+            </View>
+            <Text style={Globalstyles.textIos}> 20 mots </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            disabled
+            style={
+              ios
+                ? [styles.checkboxes, {marginLeft: 30, opacity: 0.7}]
+                : [styles.checkboxes, {opacity: 0.7}]
+            }
+            onPress={() => {
+              setReviewPicked(20);
+              setDisabledButtonStart(false);
+            }}>
+            <View style={styles.round}>
+              {reviewPicked === 20 ? <View style={styles.dot} /> : null}
+            </View>
+            <Text style={Globalstyles.textIos}> 20 mots </Text>
+          </Pressable>
+        )}
+        {word.length >= 30 ? (
+          <Pressable
+            style={
+              ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
+            }
+            onPress={() => {
+              setReviewPicked(30);
+              setDisabledButtonStart(false);
+            }}>
+            <View style={styles.round}>
+              {reviewPicked === 30 ? <View style={styles.dot} /> : null}
+            </View>
+            <Text style={Globalstyles.textIos}> 30 mots </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            disabled
+            style={
+              ios
+                ? [styles.checkboxes, {marginLeft: 30, opacity: 0.7}]
+                : [styles.checkboxes, {opacity: 0.7}]
+            }
+            onPress={() => {
+              setReviewPicked(30);
+              setDisabledButtonStart(false);
+            }}>
+            <View style={styles.round}>
+              {reviewPicked === 30 ? <View style={styles.dot} /> : null}
+            </View>
+            <Text style={Globalstyles.textIos}> 30 mots </Text>
+          </Pressable>
+        )}
         <Pressable
           style={
             ios ? [styles.checkboxes, {marginLeft: 30}] : styles.checkboxes
@@ -128,7 +229,7 @@ const Review = () => {
           <View style={styles.round}>
             {reviewPicked === word.length ? <View style={styles.dot} /> : null}
           </View>
-          <Text style={Globalstyles.text}> Tous mes mots </Text>
+          <Text style={Globalstyles.textIos}> Tous mes mots </Text>
         </Pressable>
         {ios ? (
           <Pressable
@@ -143,7 +244,7 @@ const Review = () => {
                 ? [styles.StartTheReviewButtonIos, {opacity: 0.5}]
                 : styles.StartTheReviewButtonIos
             }>
-            <Text style={Globalstyles.text}> Commencer </Text>
+            <Text style={Globalstyles.textIos}> Commencer </Text>
           </Pressable>
         ) : (
           <Pressable
@@ -155,8 +256,8 @@ const Review = () => {
             }}
             style={
               disabledButtonStart
-                ? [styles.StartTheReviewButtonIos, {opacity: 0.5}]
-                : styles.StartTheReviewButtonIos
+                ? [styles.StartTheReviewButton, {opacity: 0.5}]
+                : styles.StartTheReviewButton
             }>
             <Text style={Globalstyles.text}> Commencer </Text>
           </Pressable>

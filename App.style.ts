@@ -30,6 +30,11 @@ const Globalstyles = StyleSheet.create({
   },
   text: {
     color: '#4A4A4A',
+    fontSize: 14,
+  },
+  textIos: {
+    color: '#4A4A4A',
+    fontSize: 16,
   },
 });
 
