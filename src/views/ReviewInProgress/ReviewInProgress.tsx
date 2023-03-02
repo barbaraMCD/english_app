@@ -30,6 +30,7 @@ const ReviewInProgress = ({route}: Props) => {
   const [current, setCurrent] = useState(0);
   const [isGoodResponse, setIsGoodResponse] = useState<boolean>(false);
   const [isBadResponse, setIsBadResponse] = useState<boolean>(false);
+  const [tabGoodResponse, setTabGoodResponse] = useState<WordState[]>([]);
   const [response, setResponse] = useState('');
 
   const selectRandomWords = word.map((_n, _) => {
@@ -49,6 +50,7 @@ const ReviewInProgress = ({route}: Props) => {
     if (response === oneWord.english) {
       setIsGoodResponse(true);
       dispatch(modifyLevel(oneWord));
+      setTabGoodResponse([...tabGoodResponse, oneWord]);
     } else {
       setIsBadResponse(true);
     }
@@ -57,6 +59,8 @@ const ReviewInProgress = ({route}: Props) => {
   const followingWord = () => {
     setCurrent(current + 1);
     setResponse('');
+    setIsBadResponse(false);
+    setIsGoodResponse(false);
   };
 
   const wordContainer = tabRandomWords.map((w, key) => {
@@ -155,9 +159,19 @@ const ReviewInProgress = ({route}: Props) => {
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {wordContainer}
         {current === tabRandomWords.length ? (
-          <Text style={{fontSize: 20}}>
-            Ici il faudrait mettre le score obtenu + un lien de go back
-          </Text>
+          <View style={styles.wordToGuessContainer}>
+            <Text>bravo vous avez obtenu le score :</Text>
+            <Text>
+              {tabGoodResponse.length + ' / ' + tabRandomWords.length}
+            </Text>
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: '#f5b031'}]}
+              onPress={() => navigation.goBack()}>
+              <Text style={[Globalstyles.text, {color: 'white'}]}>
+                Continuer
+              </Text>
+            </TouchableOpacity>
+          </View>
         ) : null}
       </KeyboardAvoidingView>
     </SafeAreaView>
