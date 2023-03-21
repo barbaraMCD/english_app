@@ -3,13 +3,12 @@ import {
   FlatList,
   Image,
   Modal,
-  Pressable,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Trash2, XCircle} from 'react-native-feather';
+import {Trash2} from 'react-native-feather';
 import styles from './Home.style';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {addWord, deleteWord, WordState} from '../../store/reducers/WordReducer';

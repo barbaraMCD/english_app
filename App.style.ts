@@ -19,7 +19,6 @@ const Globalstyles = StyleSheet.create({
   headerTitle: {
     color: '#243D3D',
     fontSize: 18,
-    fontWeight: '500',
     marginLeft: 10,
   },
   line: {

@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Blue Spirits.otf",
+      "sha1": "f963e84ddd3a2b21d50b9218ec9a60c8fd30feb0"
+    },
+    {
+      "path": "src/assets/fonts/Colwell.ttf",
+      "sha1": "2e411ce11a16b450b6c9569895d9711a1d2231a0"
+    }
+  ]
+}

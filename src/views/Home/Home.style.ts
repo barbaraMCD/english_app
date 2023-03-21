@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     marginBottom: 90,
   },
   flatlist: {
-    padding: 20,
     paddingBottom: 30,
   },
   wordContainer: {
@@ -18,14 +17,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     paddingBottom: 10,
     paddingTop: 10,
+    gap: 2,
   },
   wordInFrench: {
     color: '#243D3D',
     fontSize: 16,
+    width: '40%',
   },
   wordInEnglish: {
     color: '#243D3D',
     fontSize: 16,
+    width: '40%',
   },
   index: {
     color: '#243D3D',
